@@ -1,37 +1,3 @@
-// class lapiz{
-//     #marca              /* coloco el # para decirle que es un atributo privado(protegido) */
-
-//     constructor({color="Amarillo",
-//                 dimencion=19,
-//                 borrador=true, 
-//                 material="Madera",
-//                 marca="mongol"}){
-        
-//         this.color = color;
-//         this.dimencion = dimencion;
-//         this.borrador = borrador;
-//         this.material = material;
-//         this.#marca = marca;
-//     }
-    
-//     /* set solom modificar get solo obtener */
-//     setMarca({}){
-//         this.#marca = marca;
-//         return this.getMarca();
-//     }
-//     getMarca(){
-//         return this.#marca;
-//     }
-// }
-
-// /* los metodos es lo que el lapiz puede hacer  */
-// /* La instancia de las clases es como crear la lave que va al constructore  */
-
-// let  obj = new lapiz({marca: "Norma"});
-// console.log(obj);
-
-// const formulario = document.querySelector("#formulario");
-// console.log(formulario);
 
 class lapiz{
     #marca
@@ -58,12 +24,14 @@ class lapiz{
     }
 }
 
+let obj = undefined;
 const formulario = document.querySelector("#formulario");
 let dimencion = document.querySelector(`[name="dimension"]`)
-
-
-let obj = undefined;
 let color = document.querySelector(`[name="color"]`);
+/* let marca = document.querySelector(`input[name="marca"]:checked`).value;
+
+console. log(marca);*/
+
 obj = new lapiz({});
 
 addEventListener("DOMContentLoaded", (e)=>{
@@ -92,18 +60,41 @@ const vlrBorrador = document.getElementsByName('borrador');
 
 /* para asignar  los valores por defecto a los tradie del material */
 const vlrMaterial = document.getElementsByName('material');
-console.log(vlrMaterial);
-console.log(obj);
 for(let i = 0; i< vlrMaterial.length;i++){
     if(vlrMaterial[i].value === obj.material){
         vlrMaterial[i].checked = true;
         break;
     }
-
 }
+/* extraemos todos los datos del formulario */
 
+formulario.addEventListener("submit" ,(e)=>{
+    e.preventDefault();
+    const color = formulario.elements.color.value;
+    const marca = formulario.elements.marca.value;
+    const dimencion = formulario.elements.dimension.value;
+    const borrador = formulario.elements.borrador.value;
+    const material = formulario.elements.material.value;
 
+    const nuevoLapiz= new lapiz({
+            color:color,
+            dimencion:dimencion,
+            borrador:borrador,
+            material:material,
+            marca: marca,
+    })
+    const tablas = document.querySelector(".datosFormulario");
+    tablas.insertAdjacentHTML("beforeend",`
+    <tr>
+        <th style="background-color:${nuevoLapiz.color}"></th>
+        <th>${nuevoLapiz.dimencion}</th>
+        <th>${nuevoLapiz.getMarca()}</th>
+        <th>${nuevoLapiz.borrador}</th>
+        <th>${nuevoLapiz.material}</th>
+    </tr>
+    `)
 
+})
 
 
 
